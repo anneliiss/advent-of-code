@@ -15,11 +15,20 @@ for (let arg of args) {
 
 let path = `./${year}/${day}`;
 if (fs.existsSync(path)) {
-    let text = fs.readFileSync(path + `/input.txt`)
+    let text;
+    if (day == 4) {
+        text = fs.readFileSync(path + `/input.txt`)
+                .toString()
+                .split('\n\n')
+                .map(s => s.replace(/\r$/, ''))
+                .filter(s => s.length > 0);
+    } else {
+        text = fs.readFileSync(path + `/input.txt`)
                 .toString()
                 .split('\n')
                 .map(s => s.replace(/\r$/, ''))
                 .filter(s => s.length > 0);
+    }
     let solution = require(path + `/solution`);
     for(let part of [1,2]) {
         let answer = solution.solve(text, part);
