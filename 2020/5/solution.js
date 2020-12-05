@@ -3,7 +3,7 @@ function solve(input, part) {
     let boardingPasses = Object.values(input);
     let seatIds = [];
     boardingPasses.forEach(boardingPass => {
-        let temp = boardingPass.replace(/F/g, "L").replace(/B/g, "U").replace(/R/g, "U");
+        let temp = boardingPass.replace(/F/g, "L");
         let rowLetters = temp.substr(0, 7).split("");
         let colLetters = temp.substr(7, 3).split("");
         let rowNr = binarySearch(rowLetters, 0, 0, 127);
@@ -12,7 +12,17 @@ function solve(input, part) {
         seatIds.push(seatId);
         
     })
-    return Math.max(...seatIds);  
+    seatIds.sort(function(a, b){return b-a}); //descending order
+    if (part == 1) {
+        return seatIds[0];
+    }
+    if (part == 2) {
+        for (let i = 1; i < seatIds.length - 1; i++) {
+            if (seatIds[i - 1] - seatIds[i] == 2) {
+                return seatIds[i] + 1;
+            }
+        }
+    }  
     
 }
 
