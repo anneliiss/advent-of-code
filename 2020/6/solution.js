@@ -1,25 +1,37 @@
 function solve(input, part) {
 
     let groups = Object.values(input);
-    let yesCounts = [];
+    let yesCountsSum = 0;
+
     groups.forEach(group => {
-        let uniqueLetters = [];
+        let lettersCountMap = new Map();
+        let groupMembersLetters = group.trim().split("\n");
+        let nrOfGroupMembers = groupMembersLetters.length;
         let groupLetters = group.replace(/\s+/g, "").split("");
-      
+
         groupLetters.forEach(letter => {
             
-            if (!uniqueLetters.includes(letter)) {
-                uniqueLetters.push(letter);
+            if (lettersCountMap.has(letter)) {
+                lettersCountMap.set(letter, lettersCountMap.get(letter) + 1);
+            } else {
+                lettersCountMap.set(letter, 1);
             }
 
-        }) 
-        yesCounts.push(uniqueLetters.length);
+        })
+
+        for (let [letter, count] of lettersCountMap.entries()) {
+            if (part == 1) {
+                yesCountsSum++;
+            } else if (part == 2) {
+                if (count == nrOfGroupMembers) {
+                    yesCountsSum++;
+                } 
+            }
+        }
+
     })
-    let result = yesCounts.reduce(function(a, b){
-        return a + b;
-    }, 0);  
-    return result;
-    
+ 
+    return yesCountsSum;
 }
 
 module.exports = {solve};
