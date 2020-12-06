@@ -16,7 +16,7 @@ for (let arg of args) {
 let path = `./${year}/${day}`;
 if (fs.existsSync(path)) {
     let text;
-    if (day == 4) {
+    if (day == 4 || day == 6) {
         text = fs.readFileSync(path + `/input.txt`)
                 .toString()
                 .split('\n\n')
